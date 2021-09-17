@@ -3,7 +3,8 @@ import './Track.css'
 
 const Track = () => {
 
-    renderAction = () => {
+    const renderAction = () => {
+        let isRemoval = true
         const action = isRemoval ? '-' : '+'
         return <button className="Track-action">{action}</button>
     }
