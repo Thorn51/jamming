@@ -12,4 +12,4 @@ const Playlist = () => {
     )
 }
 
-export default PlayList
+export default Playlist
