@@ -5,7 +5,7 @@ import { SearchResults } from '../SearchResults/SearchResults'
 import { Playlist } from '../Playlist/Playlist'
 import './App.css'
 
-function App() {
+const App = () => {
   return (
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
