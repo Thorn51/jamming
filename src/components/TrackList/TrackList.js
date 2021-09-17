@@ -8,3 +8,5 @@ const TrackList = () => {
         </div>
     )
 }
+
+export default TrackList
