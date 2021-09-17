@@ -1,8 +1,8 @@
 import React from 'react'
-import { TrackList } from '../TrackList/TrackList'
+import TrackList from '../TrackList/TrackList'
 import './Playlist.css'
 
-const PlayList = () => {
+const Playlist = () => {
     return (
         <div className="Playlist">
             <input defaultValue={'New Playlist'}/>

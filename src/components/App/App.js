@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import { SearchBar } from '../SearchBar/SearchBar'
-import { SearchResults } from '../SearchResults/SearchResults'
-import { Playlist } from '../Playlist/Playlist'
+import SearchBar from '../SearchBar/SearchBar'
+import SearchResults from '../SearchResults/SearchResults'
+import Playlist from '../Playlist/Playlist'
 import './App.css'
 
 const App = () => {
