@@ -7,7 +7,6 @@ import './App.css'
 
 const App = () => {
   const [searchResults, setSearchResults] = useState([])
-  console.log(searchResults)
   return (
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
