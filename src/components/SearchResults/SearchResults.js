@@ -2,11 +2,11 @@ import React from 'react'
 import TrackList from '../TrackList/TrackList'
 import './SearchResults.css'
 
-const SearchResult = () => {
+const SearchResult = (props) => {
     return (
         <div className="SearchResults">
             <h2>Results</h2>
-            <TrackList />
+            <TrackList tracks={props.searchResults} />
         </div>
     )
 }
