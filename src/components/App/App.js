@@ -5,16 +5,48 @@ import SearchResults from '../SearchResults/SearchResults'
 import Playlist from '../Playlist/Playlist'
 import './App.css'
 
+const testData = [
+  {
+    id: 1,
+    name: 'Test Song 1',
+    artist: 'Test Artist 1',
+    album: 'Test Album 1'
+  },
+  {
+    id: 2,
+    name: 'Test Song 2',
+    artist: 'Test Artist 2',
+    album: 'Test Album 2'
+  },
+  {
+    id: 3,
+    name: 'Test Song 3',
+    artist: 'Test Artist 3',
+    album: 'Test Album 3'
+  }
+]
+
 const App = () => {
-  const [searchResults, setSearchResults] = useState([])
+  const [searchResults, setSearchResults] = useState(testData)
+  const [playlistTracks, setPlaylistTracks] = useState([])
+
+  const addTrack = (track) => {
+    if(playlistTracks.includes(track)) {
+      console.log('Track already in list')
+      return
+    } else {
+      setPlaylistTracks([...playlistTracks, track])
+    } 
+  }
+  
   return (
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
       <div className="App">
         <SearchBar />
         <div className="App-playlist">
-          <SearchResults searchResults={searchResults} />
-          <Playlist />
+          <SearchResults searchResults={searchResults} onAdd={addTrack} />
+          <Playlist tracks={playlistTracks} />
         </div>
       </div>
     </div>
