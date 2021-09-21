@@ -1,21 +1,26 @@
 import React from "react";
 import './Track.css'
 
-const Track = () => {
+const Track = (props) => {
+
+    const addTrack = () => {
+        console.log('Add clicked')
+        props.onAdd(props.track)
+    }
 
     const renderAction = () => {
-        let isRemoval = true
-        const action = isRemoval ? '-' : '+'
-        return <button className="Track-action">{action}</button>
+        let isRemoval = false
+        const action = isRemoval ? <button className="Track-action"> - </button> : <button onClick={addTrack} className="Track-action"> + </button>
+        return action
     }
 
     return (
         <div className="Track">
             <div className="Track-information">
-                <h3>Track Name</h3>
-                <p>Track Artist | Album</p>
+                <h3>{props.track.name}</h3>
+                <p>{props.track.artist} | {props.track.album}</p>
             </div>
-            <button className="Track-action">-- + or - will go here</button>
+            {renderAction()}
         </div>
     )
 }
