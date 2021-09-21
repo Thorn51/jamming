@@ -4,13 +4,15 @@ import './Track.css'
 const Track = (props) => {
 
     const addTrack = () => {
-        console.log('Add clicked')
         props.onAdd(props.track)
     }
 
+    const removeTrack = () => {
+        props.onRemove(props.track)
+    }
+
     const renderAction = () => {
-        let isRemoval = false
-        const action = isRemoval ? <button className="Track-action"> - </button> : <button onClick={addTrack} className="Track-action"> + </button>
+        const action = props.isRemoval ? <button onClick={removeTrack} className="Track-action"> Remove Track </button> : <button onClick={addTrack} className="Track-action"> Add Track </button>
         return action
     }
 

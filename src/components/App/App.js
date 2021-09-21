@@ -38,6 +38,11 @@ const App = () => {
       setPlaylistTracks([...playlistTracks, track])
     } 
   }
+
+  const removeTrack = (track) => {
+    let filteredPlayList = playlistTracks.filter(remove => track !== remove)
+    setPlaylistTracks(filteredPlayList)
+  }
   
   return (
     <div>
@@ -46,7 +51,7 @@ const App = () => {
         <SearchBar />
         <div className="App-playlist">
           <SearchResults searchResults={searchResults} onAdd={addTrack} />
-          <Playlist tracks={playlistTracks} />
+          <Playlist tracks={playlistTracks} onRemove={removeTrack} isRemoval={true} />
         </div>
       </div>
     </div>
