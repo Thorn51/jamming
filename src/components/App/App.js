@@ -10,25 +10,29 @@ const testData = [
     id: 1,
     name: 'Test Song 1',
     artist: 'Test Artist 1',
-    album: 'Test Album 1'
+    album: 'Test Album 1',
+    uri: 'Test URI 1'
   },
   {
     id: 2,
     name: 'Test Song 2',
     artist: 'Test Artist 2',
-    album: 'Test Album 2'
+    album: 'Test Album 2',
+    uri: 'Test URI 2'
   },
   {
     id: 3,
     name: 'Test Song 3',
     artist: 'Test Artist 3',
-    album: 'Test Album 3'
+    album: 'Test Album 3',
+    uri: 'Test URI 2'
   }
 ]
 
 const App = () => {
   const [searchResults, setSearchResults] = useState(testData)
   const [playlistTracks, setPlaylistTracks] = useState([])
+  const [playlistName, setPlaylistName] = useState('Your playlist')
 
   const addTrack = (track) => {
     if(playlistTracks.includes(track)) {
@@ -43,7 +47,15 @@ const App = () => {
     let filteredPlayList = playlistTracks.filter(remove => track !== remove)
     setPlaylistTracks(filteredPlayList)
   }
+
+  const updatePlaylistName = (name) => {
+    setPlaylistName(name)
+  }
   
+  const savePlaylist = () => {
+    let trackURIs = playlistTracks.map(track => track.uri)
+  }
+
   return (
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
@@ -51,7 +63,7 @@ const App = () => {
         <SearchBar />
         <div className="App-playlist">
           <SearchResults searchResults={searchResults} onAdd={addTrack} />
-          <Playlist tracks={playlistTracks} onRemove={removeTrack} isRemoval={true} />
+          <Playlist onSave={savePlaylist} playlistName={playlistName} onNameChange={updatePlaylistName} tracks={playlistTracks} onRemove={removeTrack} isRemoval={true} />
         </div>
       </div>
     </div>
