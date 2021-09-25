@@ -12,7 +12,7 @@ const Track = (props) => {
     }
 
     const renderAction = () => {
-        const action = props.isRemoval ? <button onClick={removeTrack} className="Track-action"> Remove Track </button> : <button onClick={addTrack} className="Track-action"> Add Track </button>
+        const action = props.isRemoval ? <button onClick={removeTrack} className="Track-action"> - </button> : <button onClick={addTrack} className="Track-action"> + </button>
         return action
     }
 

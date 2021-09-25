@@ -31,6 +31,7 @@ const App = () => {
   
   const savePlaylist = () => {
     let trackURIs = playlistTracks.map(track => track.uri)
+    Spotify.savePlaylist(playlistName, trackURIs)
   }
 
   const search = (searchTerm) => {

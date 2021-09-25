@@ -27,7 +27,8 @@ export const Spotify = {
             const clientID = `client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}`
             const responseType = '&response_type=token'
             const redirectURI = '&redirect_uri=http://localhost:3000/'
-            const accessUrl = `${endpoint}${clientID}${responseType}${redirectURI}` 
+            const scope = `&scope=playlist-modify-public`
+            const accessUrl = `${endpoint}${clientID}${scope}${responseType}${redirectURI}` 
 
             window.location = accessUrl
         }
@@ -36,7 +37,7 @@ export const Spotify = {
     async search(searchTerm) {
 
         accessToken = Spotify.getAccessToken()
-        
+
         try {
             
             const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${searchTerm}`, { headers: {
@@ -52,5 +53,57 @@ export const Spotify = {
         } catch (error) {
             console.log(error)
         }
+    },
+
+    async savePlaylist(playlistName, uriArray) {
+        
+        let accessToken = Spotify.getAccessToken()
+
+        if(!playlistName || !uriArray.length) {
+            return
+        }
+
+        
+        
+        //GET user id
+        try {
+            let response = await fetch(`https://api.spotify.com/v1/me`, { headers: {'Authorization': `Bearer ${accessToken}`}})
+
+            let userProfile = await response.json()
+
+            let userId = userProfile.id 
+
+            //POST playlist name
+            let postPlaylistName = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify( { name: playlistName })
+            })
+
+            let playlist = await postPlaylistName.json()
+
+            let playlistId = playlist.id
+
+        // //POST tracks to playlist
+            let postTracks = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(uriArray)
+            })
+
+            let trackPostResult = await postTracks.json()
+
+            console.log(trackPostResult)
+            
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 }
