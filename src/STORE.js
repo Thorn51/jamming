@@ -1,5 +1,5 @@
 
-export const items = [
+export const STORE = [
     {
         "collaborative": false,
         "external_urls": {
@@ -54,4 +54,4 @@ export const items = [
         "type": "playlist",
         "uri": "spotify:user:wizzlersmate:playlist:1AVZz0mBuGbCEoNRQdYQju"
     }
-],
+]
