@@ -34,6 +34,22 @@ export const Spotify = {
         }
     }, 
 
+    async getUserId () {
+
+        const accessToken = Spotify.getAccessToken()
+
+        try {
+            let response = await fetch(`https://api.spotify.com/v1/me`, { headers: {'Authorization': `Bearer ${accessToken}`}})
+
+            let user = await response.json()
+
+            return user
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
     async search(searchTerm) {
 
         accessToken = Spotify.getAccessToken()
@@ -58,20 +74,13 @@ export const Spotify = {
     async savePlaylist(playlistName, uriArray) {
         
         let accessToken = Spotify.getAccessToken()
+        let userId = await Spotify.getUserId()
 
         if(!playlistName || !uriArray.length) {
             return
         }
 
-        
-        
-        //GET user id
         try {
-            let response = await fetch(`https://api.spotify.com/v1/me`, { headers: {'Authorization': `Bearer ${accessToken}`}})
-
-            let userProfile = await response.json()
-
-            let userId = userProfile.id 
 
             //POST playlist name
             let postPlaylistName = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
@@ -98,9 +107,26 @@ export const Spotify = {
             })
 
             let trackPostResult = await postTracks.json()
-
-            console.log(trackPostResult)
             
+        } catch (error) {
+            console.log(error)
+        } 
+    },
+
+    async getPlaylists() {
+
+        let accessToken = await Spotify.getAccessToken()
+        let userId = await Spotify.getUserId().then(user => user.id)
+        
+        try {
+            const result = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }})
+            
+            const playlists = await result.json()
+
+            return playlists
+
         } catch (error) {
             console.log(error)
         }
