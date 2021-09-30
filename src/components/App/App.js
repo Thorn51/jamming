@@ -1,15 +1,34 @@
-import { useState } from 'react';
-import './App.css';
+import { useState, useEffect } from 'react';
+
+//Components 
 import SearchBar from '../SearchBar/SearchBar'
 import SearchResults from '../SearchResults/SearchResults'
 import Playlist from '../Playlist/Playlist'
+import PlaylistCollection from '../PlaylistCollection/PlaylistCollection'
+
+//Api
 import { Spotify } from '../../util/Spotify';
-import './App.css'
+
+//Styles
+import './App.css';
+
+//Test data
+import { STORE } from '../../STORE';
 
 const App = () => {
   const [searchResults, setSearchResults] = useState([])
   const [playlistTracks, setPlaylistTracks] = useState([])
   const [playlistName, setPlaylistName] = useState('Your playlist')
+  const [playlistCollection, setPlaylistCollection] = useState([])
+  const [user, setUser] = useState([])
+
+  useEffect(() => {
+    Spotify.getAccessToken()
+    Spotify.getUserId().then(data => setUser(data))
+    Spotify.getPlaylists().then(data => setPlaylistCollection(data))
+  }, []) 
+
+  console.log('Playlists => ', playlistCollection.items, 'User => ', user)
 
   const addTrack = (track) => {
     if(playlistTracks.includes(track)) {
@@ -25,6 +44,7 @@ const App = () => {
     setPlaylistTracks(filteredPlayList)
   }
 
+  // This needs to be researched for updating playlist instead of saving a new one
   const updatePlaylistName = (name) => {
     setPlaylistName(name)
   }
@@ -41,9 +61,14 @@ const App = () => {
     
   }
 
+  const selectPlaylist = (spotifyId) => {
+    console.log(spotifyId)
+  }
+
   return (
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
+      {playlistCollection.items && <PlaylistCollection playlists={playlistCollection.items} onSelect={selectPlaylist} /> }
       <div className="App">
         <SearchBar onSearch={search} />
         <div className="App-playlist">
