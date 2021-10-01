@@ -7,11 +7,13 @@ const PlaylistCollection = ({playlists, onSelect}) => {
         onSelect(e.target.value)
     }
 
+    console.log(playlists)
+
     return (
         <div className="Playlist-collection">
             <select name="playlists" id="playlists" onChange={handleSelect}>
                 <option value="label">Select a playlist...</option>
-                {playlists.map(list => <option key={list.id}  value={list.id}>{list.name}</option>)}
+                {playlists.map(list => <option key={list.id}  value={list.id}>{list.name} ({list.tracks.total} Tracks)</option>)}
                 <option value="newList">Create a new playlist</option>
             </select>
         </div>
