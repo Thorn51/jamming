@@ -28,8 +28,6 @@ const App = () => {
     Spotify.getPlaylists().then(data => setPlaylistCollection(data))
   }, []) 
 
-  console.log('Playlists => ', playlistCollection.items, 'User => ', user)
-
   const addTrack = (track) => {
     if(playlistTracks.includes(track)) {
       console.log('Track already in list')
@@ -61,8 +59,13 @@ const App = () => {
     
   }
 
-  const selectPlaylist = (spotifyId) => {
-    console.log(spotifyId)
+  const selectPlaylist = (playlistId) => {
+    if(playlistId === 'newList') {
+      setPlaylistCollection([])
+    } else {
+      Spotify.getTracks(playlistId).then(tracks => setPlaylistTracks(tracks.items))
+    }
+
   }
 
   return (
