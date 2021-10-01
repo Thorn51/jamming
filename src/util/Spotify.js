@@ -131,5 +131,25 @@ export const Spotify = {
             console.log(error)
         }
         
+    }, 
+
+    async getTracks (playlistId) {
+        const accessToken = await Spotify.getAccessToken()
+
+        try {
+            
+            let results = await fetch(`	https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }})
+            
+            let tracks = await results.json()
+            
+            return tracks
+
+        } catch (error) {
+            console.log(error)
+            
+        }
+
     }
 }
