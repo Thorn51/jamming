@@ -12,15 +12,15 @@ import { Spotify } from '../../util/Spotify';
 //Styles
 import './App.css';
 
-//Test data
-import { STORE } from '../../STORE';
-
 const App = () => {
   const [searchResults, setSearchResults] = useState([])
   const [playlistTracks, setPlaylistTracks] = useState([])
   const [playlistName, setPlaylistName] = useState('Your playlist')
   const [playlistCollection, setPlaylistCollection] = useState([])
   const [user, setUser] = useState([])
+  const [isNew, setIsNew] = useState(true)
+
+  console.log(playlistName)
 
   useEffect(() => {
     Spotify.getAccessToken()
@@ -60,9 +60,14 @@ const App = () => {
   }
 
   const selectPlaylist = (playlistId) => {
+    const listName = playlistCollection.items.find(list => list.id === playlistId)
+    
     if(playlistId === 'newList') {
-      setPlaylistCollection([])
+      setPlaylistName('New Playlist')
+      setPlaylistTracks([])
     } else {
+      setPlaylistName(listName.name)
+      setIsNew(false)
       Spotify.getTracks(playlistId).then(tracks => setPlaylistTracks(tracks.items))
     }
 
@@ -76,7 +81,7 @@ const App = () => {
         <SearchBar onSearch={search} />
         <div className="App-playlist">
           <SearchResults searchResults={searchResults} onAdd={addTrack} />
-          <Playlist onSave={savePlaylist} playlistName={playlistName} onNameChange={updatePlaylistName} tracks={playlistTracks} onRemove={removeTrack} isRemoval={true} />
+          <Playlist newList={isNew} onSave={savePlaylist} playlistName={playlistName} onNameChange={updatePlaylistName} tracks={playlistTracks} onRemove={removeTrack} isRemoval={true} />
         </div>
       </div>
     </div>
